@@ -11,9 +11,14 @@
         <div class="flex items-center space-x-4">
             <h2 class="text-2xl font-semibold">Cập nhật bảng giá vàng</h2>
         </div>
-        <a href="{{ route('admin.featured_products.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Quản lý sản phẩm nổi bật
-        </a>
+        <div class="flex items-center space-x-4">
+            <a href="{{ route('admin.featured_products.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Quản lý sản phẩm nổi bật
+            </a>
+            <a href="{{ route('admin.catalogues.index') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                Quản lý catalog
+            </a>
+        </div>
     </div>
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">

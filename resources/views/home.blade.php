@@ -474,119 +474,36 @@
         <div class="row">
           <div class="swiper collection-swiper">
             <div class="swiper-wrapper">
+              @foreach($catalogues as $catalogue)
               <div class="swiper-slide overflow-hidden">
                 <div class="product-card">
                   <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                     <h3 class="card-title text-uppercase">
-                      <a href="#">Trang sức cưới cho cô dâu</a>
+                      <a href="{{ $catalogue->link ?? '#' }}">{{ $catalogue->title }}</a>
                     </h3>
                   </div>
                   <div class="image-overlay position-relative">
                     <div class="product-image">
-                      <img src="{{ asset('images/trang-suc-cuoi-cho-co-dau.png') }}" alt="product-item" class="product-image img-fluid">
+                      <img src="{{ asset('storage/' . $catalogue->image_path) }}" alt="{{ $catalogue->title }}" class="product-image img-fluid">
                       <div class="text-box box-slide position-absolute">
                         <div class="text-content p-5 bg-light">
-                          <h3>Truyền thống giao thoa hiện đại</h3>
-                          <p>Chuyên vàng ta 24k và vàng tây 18k cho lễ tân hôn, sính lễ hai bên. Hoa Tùng sẽ tư vấn gia đình những món trang sức cần phải có cho ngày trọng đại.</p>
+                          <h3>{{ $catalogue->subtitle }}</h3>
+                          <p>{{ $catalogue->description }}</p>
+                          @if($catalogue->features)
                           <ul>
-                            <li>Dây chuyền nhà heo</li>
-                            <li>Kiềng cổ chạm khắc</li>
-                            <li>Hoa tai rồng phượng</li>
-                            <li>Vòng lắc tay tinh xảo </li>
-                            <li>Nhẫn mai kim tiền</li>
+                            @foreach($catalogue->features as $feature)
+                            <li>{{ $feature }}</li>
+                            @endforeach
                           </ul>
-                          <a href="https://www.facebook.com/vanghoatung" class="btn btn-normal mt-3">Mẫu cập nhật hằng ngày tại đây</a>
+                          @endif
+                          <a href="{{ $catalogue->link ?? 'https://www.facebook.com/vanghoatung' }}" class="btn btn-normal mt-3">Mẫu cập nhật hằng ngày tại đây</a>
                         </div>
                       </div>
                     </div>
                   </div>                  
                 </div>
               </div>
-              <div class="swiper-slide overflow-hidden">
-                <div class="product-card">
-                  <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                    <h3 class="card-title text-uppercase">
-                      <a href="shop.html">Trang sức cho nam giới</a>
-                    </h3>
-                  </div>
-                  <div class="image-overlay position-relative">
-                    <div class="product-image">
-                      <img src="{{ asset('images/nhan-nam.png') }}" alt="product-item" class="product-image img-fluid">
-
-                      <div class="text-box box-slide position-absolute">
-                        <div class="text-content p-5 bg-light">
-                          <h3>Làm đẹp cho phái mạnh</h3>
-                          <p>Cung cấp mẫu mã sang trọng, lịch lãm cho phái mạnh mọi lứa tuổi. Trọng lượng từ vài chỉ cho học sinh, sinh viên, đến vài lượng cho nam nhân thành công.</p>
-                          <ul>
-                            <li>Dây chuyền thể thao hoặc đúc chạm</li>
-                            <li>Lắc tay bảng, đúc thể hiện uy quyền</li>
-                            <li>Nhẫn hột phong thuỷ các màu, hoọt xoanf, tango, trơn</li>
-                          </ul>
-                          <a href="https://www.facebook.com/vanghoatung" class="btn btn-normal mt-3">Mẫu cập nhật hằng ngày tại đây</a>
-                        </div>
-                      </div>
-                    </div>
-                  <!-- product-image -->
-                  </div>                  
-                </div>
-              </div>
-              <div class="swiper-slide overflow-hidden">
-                <div class="product-card">
-                  <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                    <h3 class="card-title text-uppercase">
-                      <a href="shop.html">Trang sức cho người lớn tuổi</a>
-                    </h3>
-                  </div>
-                  <div class="image-overlay position-relative">
-                    <div class="product-image">
-                      <img src="{{ asset('images/trang-suc-lon-tuoi.png') }}" alt="product-item" class="product-image img-fluid">
-
-                      <div class="text-box box-slide position-absolute">
-                        <div class="text-content p-5 bg-light">
-                          <h3>Quà tặng cho mẹ và bà</h3>
-                          <p>Trang sức cho mẹ và bà tuy đơn giản nhưng luôn toát lên sự phúc hậu và phúc hạnh. Hoa Tùng sẽ tư vấn những món trang sức mãi được yêu thích theo thời gian.</p>
-                          <ul>
-                            <li>Bông tai hoa vích cắm, chốt cài</li>
-                            <li>Vòng ngọc thạch các màu, dát vàng</li>
-                            <li>Nhẫn hột màu sang, quí phái</li>
-                          </ul>
-                          <a href="https://www.facebook.com/vanghoatung" class="btn btn-normal mt-3">Mẫu cập nhật hằng ngày tại đây</a>
-                        </div>
-                      </div>
-                    </div>
-                  <!-- product-image -->
-                  </div>                  
-                </div>
-              </div>
-              <div class="swiper-slide overflow-hidden">
-                <div class="product-card">
-                  <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                    <h3 class="card-title text-uppercase">
-                      <a href="shop.html">Vàng bạc cho bé</a>
-                    </h3>
-                  </div>
-                  <div class="image-overlay position-relative">
-                    <div class="product-image">
-                      <img src="{{ asset('images/bac.png') }}" alt="product-item" class="product-image img-fluid">
-
-                      <div class="text-box box-slide position-absolute">
-                        <div class="text-content p-5 bg-light">
-                          <h3>Trang sức cho bé trai, bé gái</h3>
-                          <p>Ngoài trang sức vàng phong phú như người lớn, Hoa Tùng còn rất nhiều mẫu mã bạc dễ thương cho mọi dịp quan trọng như đầy tháng, thôi nôi, sinh nhật.</p>
-                          <ul>
-                            <li>Vòng tay vàng bạc trơn, lắc đáng yêu</li>
-                            <li>Bông vàng bạc tai đơn giản cho bé gái còn đi học </li>
-                            <li>Dây chuyền vàng bạc các loại từ vài tháng tuổi</li>
-                            <li>Nhẫn vàng bạc cực kì dễ thương</li>
-                          </ul>
-                          <a href="https://www.facebook.com/vanghoatung" class="btn btn-normal mt-3">Mẫu cập nhật hằng ngày tại đây</a>
-                        </div>
-                      </div>
-                    </div>
-                  <!-- product-image -->
-                  </div>                  
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
         </div>
@@ -819,4 +736,5 @@
     <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
   </body>
+</html>
 </html>

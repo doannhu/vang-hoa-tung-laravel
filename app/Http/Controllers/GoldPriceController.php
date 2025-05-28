@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GoldPrice;
 use App\Models\FeaturedProduct;
+use App\Models\Catalogue;
 
 class GoldPriceController extends Controller
 {
@@ -15,7 +16,10 @@ class GoldPriceController extends Controller
         $featuredProducts = FeaturedProduct::where('is_active', true)
             ->orderBy('order')
             ->get();
-        return view('home', compact('goldPrices', 'featuredProducts'));
+        $catalogues = Catalogue::where('is_active', true)
+            ->orderBy('order')
+            ->get();
+        return view('home', compact('goldPrices', 'featuredProducts', 'catalogues'));
     }
 
     // Show admin page for editing gold prices
