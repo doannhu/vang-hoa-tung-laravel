@@ -155,9 +155,7 @@
                     </li>
                     <li>
                       <a href="shop-sidebar.html" class="dropdown-item item-anchor">Sửa chữa trang sức</a>
-                    </li>
-
-                    
+                    </li>                    
                   </ul>
                 </li>
                 <li class="nav-item dropdown me-4">
@@ -226,7 +224,7 @@
                 <div class="col-md-12">
                   <div class="banner-item" style="background-image: url({{ asset('images/nhan-cuoi-background.jpeg') }}); background-repeat: no-repeat; background-position: right; height: 682px;">
                     <div class="banner-content padding-large">
-                      <h1 class="display-1 text-uppercase text-dark pb-2">Vàng Hoa Tùng</h1>
+                      <h1 class="display-1 text-uppercase text-dark pb-2 fw-bold">Vàng Hoa Tùng</h1>
                       <p>Chào mừng Quý khách đến với Vàng Hoa Tùng - Nơi kiến tạo vẻ đẹp và giá trị của sự quý phái. Với hơn 50 năm truyền thống vững vàng, chúng tôi tự hào phục vụ uy tín, chuyên nghiệp nhất tại Quảng Ngãi.</p>                      
                       <a href="#bang-gia" class="btn btn-medium btn-arrow position-relative mt-5">
                         <span class="text-uppercase" >Giá Vàng Hôm Nay</span>            
@@ -334,7 +332,7 @@
           <div class="col-lg-6">
             <div class="detail p-5">
               <div class="display-header">
-                <h2 class="display-2 text-uppercase text-dark pb-2">Hoa Tùng</h2>
+                <h2 class="display-2 text-uppercase text-dark pb-2 fw-bold">Hoa Tùng</h2>
                 <p class="pb-3">Với giá trị cốt lõi "Giữ tín hơn giữ vàng" và đội ngũ nhân viên nhiệt tình, chúng tôi tự hào giới thiệu những sản phẩm và dịch vụ thời trang vàng bạc đa dạng, từ truyền thống đến hiện đại. Chất liệu vàng bạc chọn lọc kết hợp cùng thiết kế tinh tế, mỗi sản phẩm tại Vàng Hoa Tùng đều là tuyên ngôn về đẳng cấp và phong cách riêng biệt.
 </p>
                 <p>Không chỉ là địa chỉ mua sắm, Vàng Hoa Tùng còn là người bạn đồng hành tin cậy với dịch vụ cầm đồ chuyên nghiệp. Quý khách có thể yên tâm đặt niềm tin vào chúng tôi, với sự tận tâm và uy tín đã được cộng đồng địa phương khẳng định suốt nhiều thập kỷ qua.</p>
@@ -356,7 +354,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="display-header d-flex flex-wrap justify-content-between pb-3">
-              <h2 class="display-2 text-dark text-uppercase">Bảng giá hôm nay</h2>
+              <h2 class="display-2 text-dark text-uppercase fw-bold">Bảng giá hôm nay</h2>
               @if($goldPrices->isNotEmpty() && $goldPrices->first()->updated_at)
                 <p class="text-muted">Cập nhật lúc: {{ $goldPrices->first()->updated_at->format('d/m/Y H:i') }}</p>
               @endif
@@ -390,7 +388,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="display-header pb-3 d-flex justify-content-between flex-wrap col-md-12">
-            <h2 class="display-2 text-dark text-uppercase">Sản Phẩm bán chạy nhất</h2> 
+            <h2 class="display-2 text-dark text-uppercase fw-bold">Sản Phẩm bán chạy nhất</h2> 
           </div>
         </div>
         <div class="row">
@@ -516,96 +514,28 @@
       <div class="container-fluid">
         <div class="row overflow-hidden">
           <div class="display-header pb-3 d-flex justify-content-between col-md-12">
-            <h2 class="display-2 text-dark text-uppercase">Ưu đãi và quà tặng giá trị</h2>
+            <h2 class="display-2 text-dark text-uppercase fw-bold">Ưu đãi và quà tặng giá trị</h2>
           </div>
           <div id="trending-swiper" class="product-swiper col-md-12">
             <div class="swiper">
               <div class="swiper-wrapper">
+                @foreach($promotions as $promotion)
                 <div class="swiper-slide">
                   <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
                     <div class="image-holder">
-                      <img src="{{ asset('images/qua-tet.png') }}" alt="product-item" class="product-image img-fluid">
+                      <img src="{{ asset('storage/' . $promotion->image_path) }}" alt="{{ $promotion->title }}" class="product-image img-fluid">
                     </div>
                     <div class="cart-concern">
                       <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Quà Tết Cuối Năm</a>
+                        <a href="{{ $promotion->link ?? '#' }}" class="pt-2">{{ $promotion->title }}</a>
                       </h3>
                       <div class="cart-info">
+                        <p>{{ $promotion->description }}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="swiper-slide">
-                  <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
-                    <div class="image-holder">
-                      <img src="{{ asset('images/mu-bao-hiem.png') }}" alt="product-item" class="product-image img-fluid">
-                    </div>
-                    <div class="cart-concern">
-                      <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Mũ bảo hiểm chất lượng cao</a>
-                      </h3>
-                      <div class="cart-info">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="swiper-slide">
-                  <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
-                    <div class="image-holder">
-                      <img src="{{ asset('images/than-tai.png') }}" alt="product-item" class="product-image img-fluid">
-                    </div>
-                    <div class="cart-concern">
-                      <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Lì xì thần tài đầu năm</a>
-                      </h3>
-                      <div class="cart-info">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
-                    <div class="image-holder">
-                      <img src="{{ asset('images/uu-dai-mua-nhieu.png') }}" alt="product-item" class="product-image img-fluid">
-                    </div>
-                    <div class="cart-concern">
-                      <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Ưu đãi khi mua số lượng lớn</a>
-                      </h3>
-                      <div class="cart-info">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
-                    <div class="image-holder">
-                      <img src="{{ asset('images/mien-phi-ship.png') }}" alt="product-item" class="product-image img-fluid">
-                    </div>
-                    <div class="cart-concern">
-                      <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Miễn phí ship nội thành</a>
-                      </h3>
-                      <div class="cart-info">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
-                    <div class="image-holder">
-                      <img src="{{ asset('images/lich.png') }}" alt="product-item" class="product-image img-fluid">
-                    </div>
-                    <div class="cart-concern">
-                      <h3 class="card-title text-uppercase pt-3 text-primary">
-                        <a href="single-product.html" class="pt-2">Lịch thuận buồm xuôi gió</a>
-                      </h3>
-                      <div class="cart-info">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                @endforeach
               </div>
               <div class="swiper-pagination text-center mt-5"></div>
             </div>
@@ -619,59 +549,31 @@
         <div class="row">
           <div class="col-md-12">
             <div class="display-header d-flex flex-wrap justify-content-between pb-3">
-              <h2 class="display-2 text-dark text-uppercase">Đóng góp xã hội</h2>
+              <h2 class="display-2 text-dark text-uppercase fw-bold">Đóng góp xã hội</h2>
             </div>
           </div>
         </div>
         <div class="row g-3 post-grid">
+          @foreach($blogPosts as $post)
           <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
             <div class="card-item">
               <div class="card border-0 bg-transparent">
                 <div class="card-image">
-                  <img src="{{ asset('images/thien-nguyen.png') }}" alt="" class="post-image img-fluid">
+                  <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="post-image img-fluid">
                 </div>
               </div>
               <div class="card-body p-0 mt-4">
                 <h3 class="card-title text-uppercase">
-                  <a href="single-post.html">Thiện Nguyện Hàng Năm</a>
+                  <a href="{{ $post->link ?? '#' }}">{{ $post->title }}</a>
                 </h3>
-                <p>Hằng năm Hoa Tùng đóng góp cho các tổ chức trẻ em, thương binh và các hoàn cảnh khó khăn trong địa phương. Hoa Tùng hiểu rõ đây là trách nhiệm của mỗi doanh nghiệp, cùng chung tay đóng góp vì sự phát triển của xã hội.</p>
-                <a href="single-post.html" class="btn btn-normal text-uppercase p-0"><em>Read More</em></a>
+                <p>{{ $post->description }}</p>
+                @if($post->link)
+                <a href="{{ $post->link }}" class="btn btn-normal text-uppercase p-0"><em>Xem thêm</em></a>
+                @endif
               </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-            <div class="card-item">
-              <div class="card border-0">
-                <div class="card-image">
-                  <img src="{{ asset('images/le-hoi.png') }}" alt="" class="post-image img-fluid">
-                </div>
-              </div>
-              <div class="card-body p-0 mt-4">
-                <h3 class="card-title text-uppercase">
-                  <a href="single-post.html">Lưu giữ nét đẹp văn hoá</a>
-                </h3>
-                <p>Hàng năm, chúng tôi tổ chức nhiều sự kiện truyền thống như vui trung thu, ngày của mẹ, ngày phụ nữ, Valentine, và quốc tế thiếu nhi... Những sự kiện này không chỉ tạo nên không khí lễ hội, mà còn là cơ hội để cộng đồng tận hưởng những khoảnh khắc đáng nhớ.</p>
-                <a href="single-post.html" class="btn btn-normal text-uppercase p-0"><em>Read More</em></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-            <div class="card-item">
-              <div class="card border-0">
-                <div class="card-image">
-                  <img src="{{ asset('images/tuyen-dung.png') }}" alt="" class="post-image img-fluid">
-                </div>
-              </div>
-              <div class="card-body p-0 mt-4">
-                <h3 class="card-title text-uppercase">
-                  <a href="single-post.html">Tuyển dụng</a>
-                </h3>
-                <p>Hoa Tùng rất cần bạn, một người đáng tin và dễ thương. Ham học hỏi và không ngại thay đổi bản thân để cùng nhau phát triển và mở rộng.</p>
-                <a href="single-post.html" class="btn btn-normal text-uppercase p-0"><em>Read More</em></a>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </section>
@@ -693,8 +595,11 @@
                 <p>Hoa Tùng, một địa chỉ uy tín tại Quảng Ngãi, không chỉ là cửa hàng vàng bạc trang sức lâu đời mà còn là nơi cung cấp dịch vụ thời trang vàng bạc chất lượng, từ truyền thống đến hiện đại. Chúng tôi cam kết mang đến trải nghiệm mua sắm độc đáo và đổi mới để đáp ứng mọi nhu cầu của khách hàng. Ngoài ra, Hoa Tùng còn là đối tác tin cậy với dịch vụ cầm đồ chuyên nghiệp, giúp khách hàng giữ vững tài chính và đảm bảo an ninh cho tài sản của mình.</p>
               </div>
               <div class="copyright">
-                <p>© Copyright 2024. Design by VangHoaTung
+                <p>© Copyright 2025. Design by VangHoaTung
                 </p>
+              </div>
+              <div>
+                  <a class="nav-link me-4" href="{{ route('login') }}">Admin Login</a>
               </div>
             </div>
             <div id="ban-do-cua-hang" class="col-lg-3 col-sm-6 pb-3">
