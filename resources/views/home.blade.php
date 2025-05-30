@@ -204,10 +204,6 @@
                       <a href="order-tracking.html" class="dropdown-item item-anchor">Thần tài</a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-4" href="{{ route('login') }}">Admin Login</a>
-                </li>
               </ul>
             </div>
           </div>
@@ -595,11 +591,8 @@
                 <p>Hoa Tùng, một địa chỉ uy tín tại Quảng Ngãi, không chỉ là cửa hàng vàng bạc trang sức lâu đời mà còn là nơi cung cấp dịch vụ thời trang vàng bạc chất lượng, từ truyền thống đến hiện đại. Chúng tôi cam kết mang đến trải nghiệm mua sắm độc đáo và đổi mới để đáp ứng mọi nhu cầu của khách hàng. Ngoài ra, Hoa Tùng còn là đối tác tin cậy với dịch vụ cầm đồ chuyên nghiệp, giúp khách hàng giữ vững tài chính và đảm bảo an ninh cho tài sản của mình.</p>
               </div>
               <div class="copyright">
-                <p>© Copyright 2025. Design by VangHoaTung
+                <p>© Copyright 2025. Design by <a href="{{ route('login') }}">VangHoaTung team</a>
                 </p>
-              </div>
-              <div>
-                  <a class="nav-link me-4" href="{{ route('login') }}">Admin Login</a>
               </div>
             </div>
             <div id="ban-do-cua-hang" class="col-lg-3 col-sm-6 pb-3">
