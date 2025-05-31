@@ -9,24 +9,6 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <x-admin.button-link
-            href="{{ route('admin.users.index') }}"
-            icon="fa-users"
-            title="Quản lý người dùng"
-            description="Quản lý tài khoản người dùng và phân quyền"
-            color="purple"
-            iconColor="purple"
-        />
-
-        <x-admin.button-link
-            href="{{ route('admin.gold_prices') }}"
-            icon="fa-coins"
-            title="Quản lý giá vàng"
-            description="Cập nhật và quản lý giá vàng hàng ngày"
-            color="blue"
-            iconColor="blue"
-        />
-
-        <x-admin.button-link
             href="{{ route('admin.promotions.index') }}"
             icon="fa-gift"
             title="Quản lý khuyến mãi"

@@ -17,7 +17,10 @@ class AuthenticatedSessionController extends Controller
     public function create(): View|RedirectResponse
     {
         if (Auth::check()) {
-            return redirect()->route('admin.management');
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.management');
+            }
+            return redirect()->route('admin.page_management');
         }
 
         return view('auth.login');
@@ -32,7 +35,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.management', absolute: false));
+        if (Auth::user()->role === 'admin') {
+            return redirect()->intended(route('admin.management', absolute: false));
+        }
+        return redirect()->intended(route('admin.page_management', absolute: false));
     }
 
     /**

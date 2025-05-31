@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\PageManagementController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ Route::middleware('auth')->group(function () {
 
     // Management Routes
     Route::get('/admin/management', [ManagementController::class, 'index'])->name('admin.management');
+
+    // Page Management Routes
+    Route::get('/admin/page-management', [PageManagementController::class, 'index'])->name('admin.page_management');
 
     // Admin only routes
     Route::middleware(['admin'])->group(function () {
