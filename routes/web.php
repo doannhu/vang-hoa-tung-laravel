@@ -7,18 +7,12 @@ use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\GoldPriceController as AdminGoldPriceController;
-use App\Http\Controllers\PromotionController as AdminPromotionController;
-use App\Http\Controllers\CatalogueController as AdminCatalogueController;
-use App\Http\Controllers\FeaturedProductController as AdminFeaturedProductController;
-use App\Http\Controllers\BlogPostController as AdminBlogPostController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,10 +25,23 @@ Route::middleware('auth')->group(function () {
     // Management Routes
     Route::get('/admin/management', [ManagementController::class, 'index'])->name('admin.management');
 
-    // Gold Prices Routes
-    Route::get('/admin/gold-prices', [GoldPriceController::class, 'adminIndex'])->name('admin.gold_prices');
-    Route::post('/admin/gold-prices/update', [GoldPriceController::class, 'update'])->name('admin.gold_prices.update');
-    Route::delete('/admin/gold-prices/{id}', [GoldPriceController::class, 'destroy'])->name('admin.gold_prices.destroy');
+    // Admin only routes
+    Route::middleware(['admin'])->group(function () {
+        // Gold Prices Routes
+        Route::get('/admin/gold-prices', [GoldPriceController::class, 'adminIndex'])->name('admin.gold_prices');
+        Route::post('/admin/gold-prices/update', [GoldPriceController::class, 'update'])->name('admin.gold_prices.update');
+        Route::delete('/admin/gold-prices/{id}', [GoldPriceController::class, 'destroy'])->name('admin.gold_prices.destroy');
+
+        // User Management Routes
+        Route::resource('admin/users', UserController::class)->names([
+            'index' => 'admin.users.index',
+            'create' => 'admin.users.create',
+            'store' => 'admin.users.store',
+            'edit' => 'admin.users.edit',
+            'update' => 'admin.users.update',
+            'destroy' => 'admin.users.destroy',
+        ]);
+    });
     
     // Featured Products Routes
     Route::resource('admin/featured-products', FeaturedProductController::class)->names([
@@ -74,16 +81,6 @@ Route::middleware('auth')->group(function () {
         'edit' => 'admin.blog_posts.edit',
         'update' => 'admin.blog_posts.update',
         'destroy' => 'admin.blog_posts.destroy',
-    ]);
-
-    // User Management Routes
-    Route::resource('admin/users', UserController::class)->names([
-        'index' => 'admin.users.index',
-        'create' => 'admin.users.create',
-        'store' => 'admin.users.store',
-        'edit' => 'admin.users.edit',
-        'update' => 'admin.users.update',
-        'destroy' => 'admin.users.destroy',
     ]);
 });
 
