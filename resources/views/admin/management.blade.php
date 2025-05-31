@@ -8,6 +8,21 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- User Management -->
+        <a href="{{ route('admin.users.index') }}" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <div class="flex items-center justify-center h-16 w-16 bg-purple-100 rounded-full mx-auto mb-4">
+                <i class="fas fa-users text-2xl text-purple-600"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-center text-gray-900 mb-4">Quản lý người dùng</h2>
+            <p class="text-gray-600 text-center mb-6">Quản lý tài khoản người dùng và phân quyền</p>
+            <div class="text-center">
+                <span class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md">
+                    <i class="fas fa-arrow-right mr-2"></i>
+                    Truy cập
+                </span>
+            </div>
+        </a>
+
         <!-- Gold Prices Management -->
         <a href="{{ route('admin.gold_prices') }}" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
             <div class="flex items-center justify-center h-16 w-16 bg-blue-100 rounded-full mx-auto mb-4">

@@ -17,6 +17,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@hoatung.com',
             'password' => Hash::make('hoatung123'),
+            'role' => 'admin',
         ]);
     }
 }

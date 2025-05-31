@@ -8,62 +8,113 @@ use Illuminate\Support\Facades\Storage;
 
 class CatalogueSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
+        Catalogue::create([
+            'title' => 'Bộ sưu tập mùa xuân 2024',
+            'subtitle' => 'Bộ sưu tập trang sức mùa xuân 2024',
+            'description' => 'Khám phá bộ sưu tập trang sức mùa xuân 2024 với những thiết kế độc đáo và tinh tế.',
+            'image_path' => 'catalogues/trang-suc-nu.jpg',
+            'features' => [
+                'Thiết kế độc quyền',
+                'Chất liệu cao cấp',
+                'Giá cả hợp lý',
+                'Bảo hành trọn đời'
+            ],
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 1,
+            'is_active' => true,
+        ]);
+
+        Catalogue::create([
+            'title' => 'Bộ sưu tập cưới hỏi',
+            'subtitle' => 'Bộ sưu tập trang sức cưới hỏi',
+            'description' => 'Khám phá bộ sưu tập trang sức cưới hỏi với những thiết kế sang trọng và ý nghĩa.',
+            'image_path' => 'catalogues/nhan-cuoi.jpg',
+            'features' => [
+                'Chất liệu vàng 24K',
+                'Thiết kế độc quyền',
+                'Đá quý tự nhiên',
+                'Bảo hành trọn đời'
+            ],
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 2,
+            'is_active' => true,
+        ]);
+
+        Catalogue::create([
+            'title' => 'Bộ sưu tập trang sức nam',
+            'subtitle' => 'Bộ sưu tập trang sức dành cho nam',
+            'description' => 'Khám phá bộ sưu tập trang sức lịch lãm với những thiết kế sang trọng và mạnh mẽ cho phái mạnh.',
+            'image_path' => 'catalogues/trang-suc-nam.jpg',
+            'features' => [
+                'Chất liệu vàng 24K',
+                'Thiết kế độc quyền',
+                'Đá quý tự nhiên',
+                'Bảo hành trọn đời'
+            ],
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 2,
+            'is_active' => true,
+        ]);
+
         // Create sample catalogues
-        $catalogues = [
-            [
-                'title' => 'Nhẫn Cưới',
-                'subtitle' => 'Bộ sưu tập nhẫn cưới mới nhất',
-                'description' => 'Khám phá bộ sưu tập nhẫn cưới độc đáo, từ thiết kế cổ điển đến hiện đại. Mỗi chiếc nhẫn đều được chế tác tinh xảo, thể hiện tình yêu vĩnh cửu.',
-                'features' => [
-                    'Chất liệu vàng 24K',
-                    'Thiết kế độc quyền',
-                    'Đá quý tự nhiên',
-                    'Bảo hành trọn đời'
-                ],
-                'order' => 1,
-                'is_active' => true,
-                'image_path' => 'catalogues/nhan-cuoi.jpg'
-            ],
-            [
-                'title' => 'Trang Sức Nữ',
-                'subtitle' => 'Tôn vinh vẻ đẹp phái nữ',
-                'description' => 'Bộ sưu tập trang sức nữ với thiết kế tinh tế, kết hợp giữa truyền thống và hiện đại. Từ dây chuyền, bông tai đến vòng tay, mỗi món trang sức đều mang đến vẻ đẹp riêng biệt.',
-                'features' => [
-                    'Đa dạng mẫu mã',
-                    'Chất liệu cao cấp',
-                    'Giá cả hợp lý',
-                    'Dịch vụ tư vấn chuyên nghiệp'
-                ],
-                'order' => 2,
-                'is_active' => true,
-                'image_path' => 'catalogues/trang-suc-nu.jpg'
-            ],
-            [
-                'title' => 'Trang Sức Nam',
-                'subtitle' => 'Phong cách đẳng cấp',
-                'description' => 'Khám phá bộ sưu tập trang sức nam với thiết kế mạnh mẽ, sang trọng. Từ nhẫn, dây chuyền đến đồng hồ, mỗi món trang sức đều thể hiện đẳng cấp và phong cách riêng.',
-                'features' => [
-                    'Thiết kế nam tính',
-                    'Chất liệu bền bỉ',
-                    'Phong cách đa dạng',
-                    'Phù hợp mọi dịp'
-                ],
-                'order' => 3,
-                'is_active' => true,
-                'image_path' => 'catalogues/trang-suc-nam.jpg'
-            ]
-        ];
+        // $catalogues = [
+        //     [
+        //         'title' => 'Nhẫn Cưới',
+        //         'subtitle' => 'Bộ sưu tập nhẫn cưới mới nhất',
+        //         'description' => 'Khám phá bộ sưu tập nhẫn cưới độc đáo, từ thiết kế cổ điển đến hiện đại. Mỗi chiếc nhẫn đều được chế tác tinh xảo, thể hiện tình yêu vĩnh cửu.',
+        //         'features' => [
+        //             'Chất liệu vàng 24K',
+        //             'Thiết kế độc quyền',
+        //             'Đá quý tự nhiên',
+        //             'Bảo hành trọn đời'
+        //         ],
+        //         'order' => 1,
+        //         'is_active' => true,
+        //         'image_path' => 'catalogues/nhan-cuoi.jpg'
+        //     ],
+        //     [
+        //         'title' => 'Trang Sức Nữ',
+        //         'subtitle' => 'Tôn vinh vẻ đẹp phái nữ',
+        //         'description' => 'Bộ sưu tập trang sức nữ với thiết kế tinh tế, kết hợp giữa truyền thống và hiện đại. Từ dây chuyền, bông tai đến vòng tay, mỗi món trang sức đều mang đến vẻ đẹp riêng biệt.',
+        //         'features' => [
+        //             'Đa dạng mẫu mã',
+        //             'Chất liệu cao cấp',
+        //             'Giá cả hợp lý',
+        //             'Dịch vụ tư vấn chuyên nghiệp'
+        //         ],
+        //         'order' => 2,
+        //         'is_active' => true,
+        //         'image_path' => 'catalogues/trang-suc-nu.jpg'
+        //     ],
+        //     [
+        //         'title' => 'Trang Sức Nam',
+        //         'subtitle' => 'Phong cách đẳng cấp',
+        //         'description' => 'Khám phá bộ sưu tập trang sức nam với thiết kế mạnh mẽ, sang trọng. Từ nhẫn, dây chuyền đến đồng hồ, mỗi món trang sức đều thể hiện đẳng cấp và phong cách riêng.',
+        //         'features' => [
+        //             'Thiết kế nam tính',
+        //             'Chất liệu bền bỉ',
+        //             'Phong cách đa dạng',
+        //             'Phù hợp mọi dịp'
+        //         ],
+        //         'order' => 3,
+        //         'is_active' => true,
+        //         'image_path' => 'catalogues/trang-suc-nam.jpg'
+        //     ]
+        // ];
 
-        // Create catalogues directory if it doesn't exist
-        if (!Storage::disk('public')->exists('catalogues')) {
-            Storage::disk('public')->makeDirectory('catalogues');
-        }
+        // // Create catalogues directory if it doesn't exist
+        // if (!Storage::disk('public')->exists('catalogues')) {
+        //     Storage::disk('public')->makeDirectory('catalogues');
+        // }
 
-        // Create each catalogue
-        foreach ($catalogues as $catalogue) {
-            Catalogue::create($catalogue);
-        }
+        // // Create each catalogue
+        // foreach ($catalogues as $catalogue) {
+        //     Catalogue::create($catalogue);
+        // }
     }
 } 

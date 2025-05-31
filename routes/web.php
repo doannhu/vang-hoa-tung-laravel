@@ -14,6 +14,7 @@ use App\Http\Controllers\FeaturedProductController as AdminFeaturedProductContro
 use App\Http\Controllers\BlogPostController as AdminBlogPostController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -73,6 +74,16 @@ Route::middleware('auth')->group(function () {
         'edit' => 'admin.blog_posts.edit',
         'update' => 'admin.blog_posts.update',
         'destroy' => 'admin.blog_posts.destroy',
+    ]);
+
+    // User Management Routes
+    Route::resource('admin/users', UserController::class)->names([
+        'index' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'store' => 'admin.users.store',
+        'edit' => 'admin.users.edit',
+        'update' => 'admin.users.update',
+        'destroy' => 'admin.users.destroy',
     ]);
 });
 

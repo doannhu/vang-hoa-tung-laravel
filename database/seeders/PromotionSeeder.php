@@ -7,61 +7,36 @@ use Illuminate\Database\Seeder;
 
 class PromotionSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        $promotions = [
-            [
-                'title' => 'Quà Tết Cuối Năm',
-                'description' => 'Nhận ngay quà tặng giá trị khi mua hàng dịp Tết',
-                'image_path' => 'promotions/qua-tet.png',
-                'link' => '#',
-                'order' => 1,
-                'is_active' => true
-            ],
-            [
-                'title' => 'Mũ bảo hiểm chất lượng cao',
-                'description' => 'Tặng mũ bảo hiểm cao cấp khi mua trang sức',
-                'image_path' => 'promotions/mu-bao-hiem.png',
-                'link' => '#',
-                'order' => 2,
-                'is_active' => true
-            ],
-            [
-                'title' => 'Lì xì thần tài đầu năm',
-                'description' => 'Nhận lì xì may mắn khi mua hàng đầu năm',
-                'image_path' => 'promotions/than-tai.png',
-                'link' => '#',
-                'order' => 3,
-                'is_active' => true
-            ],
-            [
-                'title' => 'Ưu đãi khi mua số lượng lớn',
-                'description' => 'Giảm giá đặc biệt cho khách hàng mua số lượng lớn',
-                'image_path' => 'promotions/uu-dai-mua-nhieu.png',
-                'link' => '#',
-                'order' => 4,
-                'is_active' => true
-            ],
-            [
-                'title' => 'Miễn phí ship nội thành',
-                'description' => 'Miễn phí vận chuyển cho đơn hàng nội thành',
-                'image_path' => 'promotions/mien-phi-ship.png',
-                'link' => '#',
-                'order' => 5,
-                'is_active' => true
-            ],
-            [
-                'title' => 'Lịch thuận buồm xuôi gió',
-                'description' => 'Tặng lịch độc quyền khi mua hàng',
-                'image_path' => 'promotions/lich.png',
-                'link' => '#',
-                'order' => 6,
-                'is_active' => true
-            ]
-        ];
+        Promotion::create([
+            'title' => 'Khuyến mãi tháng 5',
+            'description' => 'Giảm giá 20% cho tất cả sản phẩm',
+            'image_path' => 'promotions/giam-gia-mua-theo-bo.jpg',
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 1,
+            'is_active' => true,
+        ]);
 
-        foreach ($promotions as $promotion) {
-            Promotion::create($promotion);
-        }
+        Promotion::create([
+            'title' => 'Chương trình sinh nhật',
+            'description' => 'Tặng quà sinh nhật cho khách hàng',
+            'image_path' => 'promotions/tang-qua-dip-le.jpg',
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 2,
+            'is_active' => true,
+        ]);
+
+        Promotion::create([
+            'title' => 'Giảm giá khi mua nhiều',
+            'description' => 'Tặng 10% giá trị khi mua trên 3 sản phẩm',
+            'image_path' => 'promotions/mua-so-luong-lon.jpg',
+            'link' => 'https://www.facebook.com/vanghoatung',
+            'order' => 3,
+            'is_active' => true,
+        ]);
     }
 } 
