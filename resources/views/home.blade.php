@@ -240,7 +240,7 @@
                 <div class="col-md-12">
                   <div class="banner-item" style="background-image: url({{ asset('images/nhan-hot.jpeg') }}); background-repeat: no-repeat; background-position: right; height: 682px;">
                     <div class="banner-content padding-large">
-                      <h1 class="display-1 text-uppercase text-dark pb-2">Uy Tín Chất Lượng</h1>
+                      <h1 class="display-1 text-uppercase text-dark pb-2 fw-bold">Uy Tín Chất Lượng</h1>
                       <p>Vàng Hoa Tùng tự tin về mẫu mã, giá cả cạnh tranh.
                       </p>   
                       <p>Theo dõi trang Vàng Hoa Tùng để cập nhật giá và xem nhiều mẫu mã hơn.
@@ -395,7 +395,7 @@
                 <div class="swiper-slide">
                   <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
                     <div class="image-holder">
-                      <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->title }}" class="product-image img-fluid">
+                      <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->title }}" class="product-image img-fluid" style="border-radius: 15px; overflow: hidden;">
                     </div>
                     <div class="cart-concern">
                       <h3 class="card-title text-uppercase pt-3 text-primary">
@@ -478,7 +478,7 @@
                   </div>
                   <div class="image-overlay position-relative">
                     <div class="product-image">
-                      <img src="{{ asset('storage/' . $catalogue->image_path) }}" alt="{{ $catalogue->title }}" class="product-image img-fluid">
+                      <img src="{{ asset('storage/' . $catalogue->image_path) }}" alt="{{ $catalogue->title }}" class="product-image img-fluid" style="border-radius: 15px; overflow: hidden;">
                       <div class="text-box box-slide position-absolute">
                         <div class="text-content p-5 bg-light">
                           <h3>{{ $catalogue->subtitle }}</h3>
@@ -519,7 +519,7 @@
                 <div class="swiper-slide">
                   <div class="product-card image-zoom-effect link-effect d-flex flex-wrap">
                     <div class="image-holder">
-                      <img src="{{ asset('storage/' . $promotion->image_path) }}" alt="{{ $promotion->title }}" class="product-image img-fluid">
+                      <img src="{{ asset('storage/' . $promotion->image_path) }}" alt="{{ $promotion->title }}" class="product-image img-fluid" style="border-radius: 15px; overflow: hidden;">
                     </div>
                     <div class="cart-concern">
                       <h3 class="card-title text-uppercase pt-3 text-primary">
@@ -550,26 +550,49 @@
           </div>
         </div>
         <div class="row g-3 post-grid">
-          @foreach($blogPosts as $post)
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-            <div class="card-item">
-              <div class="card border-0 bg-transparent">
-                <div class="card-image">
-                  <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="post-image img-fluid">
+          @if($blogPosts->count() > 0)
+            {{-- Featured Post (First Post) --}}
+            <div class="col-12 mb-4">
+              <div class="card-item featured-post">
+                <div class="card border-0 bg-transparent">
+                  <div class="card-image">
+                    <img src="{{ asset('storage/' . $blogPosts[0]->image_path) }}" alt="{{ $blogPosts[0]->title }}" class="post-image img-fluid" style="border-radius: 15px; overflow: hidden; width: 100%; height: 400px; object-fit: cover;">
+                  </div>
+                </div>
+                <div class="card-body p-0 mt-4">
+                  <h3 class="card-title text-uppercase display-6">
+                    <a href="{{ $blogPosts[0]->link ?? '#' }}">{{ $blogPosts[0]->title }}</a>
+                  </h3>
+                  <p class="lead">{{ $blogPosts[0]->description }}</p>
+                  @if($blogPosts[0]->link)
+                  <a href="{{ $blogPosts[0]->link }}" class="btn btn-normal text-uppercase p-0"><em>Xem thêm</em></a>
+                  @endif
                 </div>
               </div>
-              <div class="card-body p-0 mt-4">
-                <h3 class="card-title text-uppercase">
-                  <a href="{{ $post->link ?? '#' }}">{{ $post->title }}</a>
-                </h3>
-                <p>{{ $post->description }}</p>
-                @if($post->link)
-                <a href="{{ $post->link }}" class="btn btn-normal text-uppercase p-0"><em>Xem thêm</em></a>
-                @endif
+            </div>
+
+            {{-- Two Smaller Posts --}}
+            @foreach($blogPosts->skip(1)->take(2) as $post)
+            <div class="col-md-6 col-sm-12 mb-4">
+              <div class="card-item">
+                <div class="card border-0 bg-transparent">
+                  <div class="card-image">
+                    <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="post-image img-fluid" style="border-radius: 15px; overflow: hidden; width: 100%; height: 300px; object-fit: cover;">
+                  </div>
+                </div>
+                <div class="card-body p-0 mt-4">
+                  <h3 class="card-title text-uppercase h4">
+                    <a href="{{ $post->link ?? '#' }}">{{ $post->title }}</a>
+                  </h3>
+                  <p>{{ $post->description }}</p>
+                  @if($post->link)
+                  <a href="{{ $post->link }}" class="btn btn-normal text-uppercase p-0"><em>Xem thêm</em></a>
+                  @endif
+                </div>
               </div>
             </div>
-          </div>
-          @endforeach
+            @endforeach
+          @endif
         </div>
       </div>
     </section>
@@ -634,5 +657,4 @@
     <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
   </body>
-</html>
 </html>
