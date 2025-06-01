@@ -8,7 +8,7 @@
                 Trang chủ
             </a>
         </div>
-        <div class="flex items-center space-x-4">
+        <!-- <div class="flex items-center space-x-4">
             <h2 class="text-2xl font-semibold">Quản lý catalog</h2>
         </div>
         <div class="flex items-center space-x-4">
@@ -18,7 +18,7 @@
             <a href="{{ route('admin.featured_products.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Quản lý sản phẩm nổi bật
             </a>
-        </div>
+        </div> -->
     </div>
 
     @if(session('success'))

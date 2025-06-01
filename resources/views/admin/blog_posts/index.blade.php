@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Quản lý bài viết</h2>
         <div class="space-x-2">
-            <a href="{{ route('admin.gold_prices') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <!-- <a href="{{ route('admin.gold_prices') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                 <i class="fas fa-coins mr-2"></i> Quản lý giá vàng
             </a>
             <a href="{{ route('admin.catalogues.index') }}" class="inline-flex items-center px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700">
@@ -16,7 +16,7 @@
             </a>
             <a href="{{ route('admin.promotions.index') }}" class="inline-flex items-center px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700">
                 <i class="fas fa-gift mr-2"></i> Quản lý khuyến mãi
-            </a>
+            </a> -->
             <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
                 <i class="fas fa-home mr-2"></i> Về trang chủ
             </a>

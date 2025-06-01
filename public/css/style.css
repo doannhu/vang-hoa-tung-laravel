@@ -30,15 +30,12 @@ CSS STRUCTURE:
   --bs-primary: #082069;
   --bs-secondary: #F6F5F2;
   --bs-primary-rgb: 120, 125, 98;
-  --bs-body-bg-rgb: 237,240,249;
+  --bs-body-bg-rgb: 237, 240, 249;
   --bs-light: #fff;
   --bs-dark: #000;
   --navbar-color-color: #131814;
-  --swiper-theme-color: 
-#082069 !important;
-  --swiper-pagination-color: 
-#082069 !important;
-
+  --swiper-theme-color: #082069 !important;
+  --swiper-pagination-color: #082069 !important;
 }
 
 /* on mobile devices below 600px
