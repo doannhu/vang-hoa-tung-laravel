@@ -30,7 +30,8 @@ CSS STRUCTURE:
   --bs-primary: #082069;
   --bs-secondary: #F6F5F2;
   --bs-primary-rgb: 120, 125, 98;
-  --bs-body-bg-rgb: 237, 240, 249;
+  /* --bs-body-bg-rgb: 237, 240, 249; */
+  --bs-body-bg-rgb: #fff;
   --bs-light: #fff;
   --bs-dark: #000;
   --navbar-color-color: #131814;
@@ -669,7 +670,8 @@ h5 {
 .btn.btn-arrow {
   color: var(--bs-light);
   background-color: var(--bs-primary);
-  border-radius: 0;
+  border-radius: 0 25px 25px 0;
+  padding-right: 2.5em;
 }
 
 .btn.btn-arrow.btn-bg-light {
@@ -702,7 +704,7 @@ h5 {
 
 .btn.btn-arrow svg {
   position: absolute;
-  top: 32px;
+  top: 50%;
   right: 21px;
   transform: translateY(-50%);
   transition: all 300ms ease-out;
@@ -954,6 +956,36 @@ h5 {
 
 .review-content .quotation svg.quote {
   color: var(--bs-gray-200);
+}
+
+#testimonials {
+  position: relative;
+  border-top: 1px solid var(--bs-gray-100);
+  border-bottom: 1px solid var(--bs-gray-100);
+  padding: 4em 0;
+  margin: 4em 0;
+}
+
+#testimonials::before,
+#testimonials::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--bs-gray-100);
+}
+
+#testimonials::before {
+  top: 0;
+}
+
+#testimonials::after {
+  bottom: 0;
+}
+
+.review-content {
+  position: relative;
 }
 
 #testimonials .swiper-pagination {

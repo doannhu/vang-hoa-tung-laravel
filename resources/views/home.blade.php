@@ -218,7 +218,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="banner-item" style="background-image: url({{ asset('images/nhan-cuoi-background.jpeg') }}); background-repeat: no-repeat; background-position: right; height: 682px;">
+                  <div class="banner-item" style="background-image: url({{ asset('images/nhan-hot.jpeg') }}); background-repeat: no-repeat; background-position: right; height: 682px;">
                     <div class="banner-content padding-large">
                       <h1 class="display-1 text-uppercase text-dark pb-2 fw-bold">Vàng Hoa Tùng</h1>
                       <p>Chào mừng Quý khách đến với Vàng Hoa Tùng - Nơi kiến tạo vẻ đẹp và giá trị của sự quý phái. Với hơn 50 năm truyền thống vững vàng, chúng tôi tự hào phục vụ uy tín, chuyên nghiệp nhất tại Quảng Ngãi.</p>                      
@@ -234,7 +234,7 @@
               </div>
             </div>
           </div>
-          <div class="swiper-slide">
+          <!-- <div class="swiper-slide">
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12">
@@ -255,7 +255,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -355,7 +355,7 @@
                 <p class="text-muted">Cập nhật lúc: {{ $goldPrices->first()->updated_at->format('d/m/Y H:i') }}</p>
               @endif
             </div>
-            <table class="table table-bordered text-center text-warning" style="background: #a51d0d;">
+            <table class="table text-center">
                 <thead>
                     <tr>
                         <th>LOẠI VÀNG</th>
@@ -375,6 +375,12 @@
             </table>
           </div>
         </div>
+        <a href="{{ route('dashboard') }}" class="btn btn-medium btn-arrow position-relative mt-5">
+                        <span class="text-uppercase" >Biểu đồ giá vàng</span>            
+                        <svg class="arrow-right position-absolute" width="18" height="20">
+                          <use xlink:href="#arrow-right"></use>
+                        </svg>
+                      </a>
       </div>
     </section>
 
@@ -426,16 +432,16 @@
               </svg>
             </div>
             <div class="swiper testimonial-swiper">
-              <div class="quotation text-center">
+              <!-- <div class="quotation text-center">
                 <svg class="quote">
                   <use xlink:href="#quote" />
                 </svg>
-              </div>
+              </div> -->
               <div class="swiper-wrapper">
                 <div class="swiper-slide text-center d-flex justify-content-center">
                   <div class="review-item col-md-10">
                     <i class="icon icon-review"></i>
-                    <blockquote class="fs-4">“Hai đứa mình mua nhẫn cưới sát giờ, tay chồng thì to, tay vợ thì nhỏ, đi nhiều tiệm mà không lựa đc. Bên Hoa Tùng có nhận sửa size nhẫn nhanh, may kịp trước hôm cưới. Nhẫn được khen rất nhiều.”</blockquote>
+                    <blockquote class="fs-5">“Hai đứa mình mua nhẫn cưới sát giờ, tay chồng thì to, tay vợ thì nhỏ, đi nhiều tiệm mà không lựa đc. Bên Hoa Tùng có nhận sửa size nhẫn nhanh, may kịp trước hôm cưới. Nhẫn được khen rất nhiều.”</blockquote>
                     <div class="author-detail">
                       <div class="name text-primary text-uppercase pt-2">Vợ chồng anh Huy, chị Thanh - Lý Sơn</div>
                     </div>
@@ -444,7 +450,7 @@
                 <div class="swiper-slide text-center d-flex justify-content-center">
                   <div class="review-item col-md-10">
                     <i class="icon icon-review"></i>
-                    <blockquote class="fs-4">“Dịch vụ cầm đồ nhanh, đơn giản, và có hoá đơn. Nhắn tin qua Facebook để kiểm tra hạn, chuyển khoản khi bận không tới được shop.”</blockquote>
+                    <blockquote class="fs-5">“Dịch vụ cầm đồ nhanh, đơn giản, và có hoá đơn. Nhắn tin qua Facebook để kiểm tra hạn, chuyển khoản khi bận không tới được shop.”</blockquote>
                     <div class="author-detail">
                       <div class="name text-primary text-uppercase pt-2">Anh Đạt - Nghĩa Dõng</div>
                     </div>
@@ -560,10 +566,10 @@
                   </div>
                 </div>
                 <div class="card-body p-0 mt-4">
-                  <h3 class="card-title text-uppercase display-6">
+                  <h3 class="card-title text-uppercase">
                     <a href="{{ $blogPosts[0]->link ?? '#' }}">{{ $blogPosts[0]->title }}</a>
                   </h3>
-                  <p class="lead">{{ $blogPosts[0]->description }}</p>
+                  <p>{{ $blogPosts[0]->description }}</p>
                   @if($blogPosts[0]->link)
                   <a href="{{ $blogPosts[0]->link }}" class="btn btn-normal text-uppercase p-0"><em>Xem thêm</em></a>
                   @endif
@@ -581,7 +587,7 @@
                   </div>
                 </div>
                 <div class="card-body p-0 mt-4">
-                  <h3 class="card-title text-uppercase h4">
+                  <h3 class="card-title text-uppercase">
                     <a href="{{ $post->link ?? '#' }}">{{ $post->title }}</a>
                   </h3>
                   <p>{{ $post->description }}</p>
