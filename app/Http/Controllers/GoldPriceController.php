@@ -4,15 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GoldPrice;
+use App\Models\GoldPriceHistory;
 use App\Models\FeaturedProduct;
 use App\Models\Catalogue;
+use Illuminate\Support\Facades\DB;
 
 class GoldPriceController extends Controller
 {
     // Show gold prices on homepage
     public function index()
     {
-        $goldPrices = GoldPrice::all();
+        $goldPrices = GoldPrice::select('id', 'type', 'buy_price', 'sell_price', 'date')
+            ->whereIn('id', function($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('gold_prices')
+                    ->groupBy('type');
+            })
+            ->orderBy('type')
+            ->get();
+
         $featuredProducts = FeaturedProduct::where('is_active', true)
             ->orderBy('order')
             ->get();
@@ -39,29 +49,58 @@ class GoldPriceController extends Controller
             'prices.*.sell_price' => 'required|numeric|min:0',
         ]);
 
-        foreach ($request->prices as $priceData) {
-            if (!empty($priceData['id'])) {
-                // Update existing price
-                $price = GoldPrice::find($priceData['id']);
-                if ($price) {
-                    $price->update([
+        DB::beginTransaction();
+        try {
+            foreach ($request->prices as $priceData) {
+                if (!empty($priceData['id'])) {
+                    // Update existing price
+                    $price = GoldPrice::find($priceData['id']);
+                    if ($price) {
+                        // Save current prices to history before updating
+                        GoldPriceHistory::create([
+                            'gold_price_id' => $price->id,
+                            'type' => $price->type,
+                            'buy_price' => $price->buy_price,
+                            'sell_price' => $price->sell_price,
+                            'date' => $price->date ?? now(),
+                            'updated_by' => auth()->id()
+                        ]);
+
+                        // Update the price
+                        $price->update([
+                            'type' => $priceData['type'],
+                            'buy_price' => $priceData['buy_price'],
+                            'sell_price' => $priceData['sell_price'],
+                            'date' => now()
+                        ]);
+                    }
+                } else {
+                    // Create new price
+                    $price = GoldPrice::create([
                         'type' => $priceData['type'],
                         'buy_price' => $priceData['buy_price'],
                         'sell_price' => $priceData['sell_price'],
+                        'order' => GoldPrice::max('order') + 1,
+                        'date' => now()
+                    ]);
+
+                    // Save initial price to history
+                    GoldPriceHistory::create([
+                        'gold_price_id' => $price->id,
+                        'type' => $price->type,
+                        'buy_price' => $price->buy_price,
+                        'sell_price' => $price->sell_price,
+                        'date' => $price->date,
+                        'updated_by' => auth()->id()
                     ]);
                 }
-            } else {
-                // Create new price
-                GoldPrice::create([
-                    'type' => $priceData['type'],
-                    'buy_price' => $priceData['buy_price'],
-                    'sell_price' => $priceData['sell_price'],
-                    'order' => GoldPrice::max('order') + 1,
-                ]);
             }
+            DB::commit();
+            return redirect()->route('admin.gold_prices')->with('success', 'Cập nhật giá vàng thành công');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.gold_prices')->with('error', 'Có lỗi xảy ra khi cập nhật giá vàng: ' . $e->getMessage());
         }
-
-        return redirect()->route('admin.gold_prices')->with('success', 'Cập nhật giá vàng thành công');
     }
 
     public function destroy($id)

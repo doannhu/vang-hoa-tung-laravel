@@ -3,23 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\GoldPrice;
+use App\Models\GoldPriceHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Get today's prices
-        $todayPrices = GoldPrice::whereDate('created_at', Carbon::today())->get();
+        $range = $request->query('range', '2w');
+        if ($range === '1m') {
+            $days = 31;
+        } elseif ($range === '1w') {
+            $days = 7;
+        } else {
+            $days = 14;
+        }
+        $mainType = 'Nhẫn Tròn 99.99%';
 
-        // Get last 7 days of prices
-        $last7Days = GoldPrice::where('created_at', '>=', Carbon::now()->subDays(7))
-            ->orderBy('created_at')
-            ->get()
-            ->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('d/m');
-            });
+        // Get latest prices for each type
+        $latestPrices = GoldPrice::select('id', 'type', 'buy_price', 'sell_price', 'date')
+            ->whereIn('id', function($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('gold_prices')
+                    ->groupBy('type');
+            })
+            ->orderBy('type')
+            ->get();
+
+        // Get previous day's price for main type
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        $prevPrice = GoldPriceHistory::where('type', $mainType)
+            ->whereDate('date', $yesterday)
+            ->first();
+
+        // Get price history for chart (main type only)
+        $fromDate = Carbon::now()->subDays($days - 1)->startOfDay();
+        $history = GoldPriceHistory::where('type', $mainType)
+            ->where('date', '>=', $fromDate)
+            ->orderBy('date')
+            ->get();
 
         // Prepare chart data
         $chartData = [
@@ -27,14 +51,25 @@ class DashboardController extends Controller
             'buyPrices' => [],
             'sellPrices' => []
         ];
-
-        foreach ($last7Days as $date => $prices) {
-            $chartData['labels'][] = $date;
-            // Get average buy and sell prices for each day
-            $chartData['buyPrices'][] = $prices->avg('buy_price');
-            $chartData['sellPrices'][] = $prices->avg('sell_price');
+        foreach ($history as $record) {
+            $chartData['labels'][] = Carbon::parse($record->date)->format('d/m');
+            $chartData['buyPrices'][] = $record->buy_price;
+            $chartData['sellPrices'][] = $record->sell_price;
         }
 
-        return view('admin.dashboard', compact('todayPrices', 'chartData'));
+        // Prepare comparison array: only main type has value
+        $compare = [];
+        foreach ($latestPrices as $price) {
+            if ($price->type === $mainType && $prevPrice) {
+                $compare[$price->type] = [
+                    'buyDiff' => $price->buy_price - $prevPrice->buy_price,
+                    'sellDiff' => $price->sell_price - $prevPrice->sell_price,
+                ];
+            } else {
+                $compare[$price->type] = null;
+            }
+        }
+
+        return view('admin.dashboard', compact('latestPrices', 'chartData', 'range', 'compare'));
     }
 } 
