@@ -28,8 +28,40 @@
 
     <!-- Line Chart -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">Biểu đồ giá vàng Nhẫn Tròn 99.99%</h2>
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Biểu đồ giá vàng</h2>
         <canvas id="goldPriceChart" height="100"></canvas>
+        <!-- Heat-bar for Buy Price -->
+        <div class="mt-8">
+            <div class="mb-2 font-medium">Mua vào (30 ngày) thấp nhất - cao nhất:</div>
+            <div class="relative w-full h-6 rounded-full bg-gradient-to-r from-blue-200 to-blue-500">
+                @if(!is_null($todayBuy) && $maxBuy > $minBuy)
+                    @php
+                        $buyPercent = ($todayBuy - $minBuy) / ($maxBuy - $minBuy) * 100;
+                    @endphp
+                    <div class="absolute top-1/2 left-0" style="transform: translateX({{ $buyPercent }}%) translateY(-50%);">
+                        <div class="w-4 h-4 bg-blue-700 rounded-full border-2 border-white shadow"></div>
+                    </div>
+                @endif
+                <div class="absolute left-0 top-full mt-1 text-xs text-gray-700">₫ {{ number_format($minBuy, 0, ',', ' ') }}</div>
+                <div class="absolute right-0 top-full mt-1 text-xs text-gray-700">₫ {{ number_format($maxBuy, 0, ',', ' ') }}</div>
+            </div>
+        </div>
+        <!-- Heat-bar for Sell Price -->
+        <div class="mt-8">
+            <div class="mb-2 font-medium">Bán ra (30 ngày) thấp nhất - cao nhất:</div>
+            <div class="relative w-full h-6 rounded-full bg-gradient-to-r from-pink-200 to-pink-500">
+                @if(!is_null($todaySell) && $maxSell > $minSell)
+                    @php
+                        $sellPercent = ($todaySell - $minSell) / ($maxSell - $minSell) * 100;
+                    @endphp
+                    <div class="absolute top-1/2 left-0" style="transform: translateX({{ $sellPercent }}%) translateY(-50%);">
+                        <div class="w-4 h-4 bg-pink-700 rounded-full border-2 border-white shadow"></div>
+                    </div>
+                @endif
+                <div class="absolute left-0 top-full mt-1 text-xs text-gray-700">₫ {{ number_format($minSell, 0, ',', ' ') }}</div>
+                <div class="absolute right-0 top-full mt-1 text-xs text-gray-700">₫ {{ number_format($maxSell, 0, ',', ' ') }}</div>
+            </div>
+        </div>
     </div>
 
     <!-- Price Table -->
