@@ -56,22 +56,22 @@ class GoldPriceController extends Controller
                     // Update existing price
                     $price = GoldPrice::find($priceData['id']);
                     if ($price) {
-                        // Save current prices to history before updating
-                        GoldPriceHistory::create([
-                            'gold_price_id' => $price->id,
-                            'type' => $price->type,
-                            'buy_price' => $price->buy_price,
-                            'sell_price' => $price->sell_price,
-                            'date' => $price->date ?? now(),
-                            'updated_by' => auth()->id()
-                        ]);
-
                         // Update the price
                         $price->update([
                             'type' => $priceData['type'],
                             'buy_price' => $priceData['buy_price'],
                             'sell_price' => $priceData['sell_price'],
                             'date' => now()
+                        ]);
+
+                        // Save new prices to history after updating
+                        GoldPriceHistory::create([
+                            'gold_price_id' => $price->id,
+                            'type' => $priceData['type'],
+                            'buy_price' => $priceData['buy_price'],
+                            'sell_price' => $priceData['sell_price'],
+                            'date' => now(),
+                            'updated_by' => auth()->id()
                         ]);
                     }
                 } else {

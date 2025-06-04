@@ -32,18 +32,53 @@ class DashboardController extends Controller
             ->orderBy('type')
             ->get();
 
-        // Get previous day's price for main type
-        $yesterday = Carbon::now()->subDay()->toDateString();
-        $prevPrice = GoldPriceHistory::where('type', $mainType)
-            ->whereDate('date', $yesterday)
-            ->first();
+        // Get previous day's price for each type (previous day = day before latest available date)
+        $prevPrices = [];
+        foreach ($latestPrices as $price) {
+            // Find the latest date for this type
+            $latestDate = GoldPriceHistory::where('type', $price->type)
+                ->orderByDesc('date')
+                ->value('date');
+            // Find the previous date before the latest date
+            $prevDate = GoldPriceHistory::where('type', $price->type)
+                ->where('date', '<', $latestDate)
+                ->orderByDesc('date')
+                ->value('date');
+            // Get the price for the previous date
+            $prevPrice = GoldPriceHistory::where('type', $price->type)
+                ->where('date', $prevDate)
+                ->orderByDesc('id')
+                ->first();
+            $prevPrices[$price->type] = $prevPrice;
+        }
 
-        // Get price history for chart (main type only)
+        // Prepare comparison array
+        $compare = [];
+        foreach ($latestPrices as $price) {
+            $prevPrice = $prevPrices[$price->type] ?? null;
+            if ($prevPrice) {
+                $compare[$price->type] = [
+                    'buyDiff' => $price->buy_price - $prevPrice->buy_price,
+                    'sellDiff' => $price->sell_price - $prevPrice->sell_price,
+                ];
+            } else {
+                $compare[$price->type] = null;
+            }
+        }
+
+        // Get price history for chart (main type only) - latest price for each date
         $fromDate = Carbon::now()->subDays($days - 1)->startOfDay();
-        $history = GoldPriceHistory::where('type', $mainType)
-            ->where('date', '>=', $fromDate)
-            ->orderBy('date')
-            ->get();
+        // Step 1: Get the IDs of the latest record for each date
+        $latestIds = GoldPriceHistory::select(DB::raw('MAX(id) as id'))
+        ->where('type', $mainType)
+        ->where('date', '>=', $fromDate)
+        ->groupBy(DB::raw('DATE(date)'))
+        ->pluck('id');
+
+        // Step 2: Get the full records for those IDs, ordered by date
+        $history = GoldPriceHistory::whereIn('id', $latestIds)
+        ->orderBy('date')
+        ->get();
 
         // Prepare chart data
         $chartData = [
@@ -57,19 +92,6 @@ class DashboardController extends Controller
             $chartData['sellPrices'][] = $record->sell_price;
         }
 
-        // Prepare comparison array: only main type has value
-        $compare = [];
-        foreach ($latestPrices as $price) {
-            if ($price->type === $mainType && $prevPrice) {
-                $compare[$price->type] = [
-                    'buyDiff' => $price->buy_price - $prevPrice->buy_price,
-                    'sellDiff' => $price->sell_price - $prevPrice->sell_price,
-                ];
-            } else {
-                $compare[$price->type] = null;
-            }
-        }
-
         // --- Heat-bar data ---
         $monthFrom = Carbon::now()->subDays(30)->startOfDay();
         $monthHistory = GoldPriceHistory::where('type', $mainType)
@@ -80,9 +102,11 @@ class DashboardController extends Controller
         $maxBuy = $monthHistory->max('buy_price');
         $minSell = $monthHistory->min('sell_price');
         $maxSell = $monthHistory->max('sell_price');
+        
         $today = Carbon::now()->toDateString();
         $todayHistory = GoldPriceHistory::where('type', $mainType)
             ->whereDate('date', $today)
+            ->orderByDesc('id')
             ->first();
         $todayBuy = $todayHistory ? $todayHistory->buy_price : null;
         $todaySell = $todayHistory ? $todayHistory->sell_price : null;
@@ -91,44 +115,98 @@ class DashboardController extends Controller
         // Current
         $currentBuy = $todayBuy;
         $currentSell = $todaySell;
+        
         // Spread
         $spreadAbs = ($currentBuy && $currentSell) ? $currentSell - $currentBuy : null;
         $spreadPct = ($currentBuy && $currentSell && $currentBuy > 0) ? round(($currentSell - $currentBuy) / $currentBuy * 100, 2) : null;
-        // 7d change
-        $sevenDaysAgo = Carbon::now()->subDays(7)->toDateString();
-        $sevenDayHistory = GoldPriceHistory::where('type', $mainType)
-            ->whereDate('date', $sevenDaysAgo)
-            ->first();
-        $change7d = ($currentBuy && $sevenDayHistory) ? round(($currentBuy - $sevenDayHistory->buy_price) / $sevenDayHistory->buy_price * 100, 2) : null;
-        $change7dDir = ($change7d > 0) ? 'up' : (($change7d < 0) ? 'down' : 'flat');
-        // 30d change
-        $thirtyDaysAgo = Carbon::now()->subDays(30)->toDateString();
-        $thirtyDayHistory = GoldPriceHistory::where('type', $mainType)
-            ->whereDate('date', $thirtyDaysAgo)
-            ->first();
-        $change30d = ($currentBuy && $thirtyDayHistory) ? round(($currentBuy - $thirtyDayHistory->buy_price) / $thirtyDayHistory->buy_price * 100, 2) : null;
-        $change30dDir = ($change30d > 0) ? 'up' : (($change30d < 0) ? 'down' : 'flat');
-        // Sparklines (last 7 and 30 days)
-        $spark7d = GoldPriceHistory::where('type', $mainType)
-            ->where('date', '>=', Carbon::now()->subDays(6)->startOfDay())
-            ->orderBy('date')
-            ->pluck('buy_price')
+        
+        // 7d and 30d change -- compare latest price with 7 and 30 days before the latest available date
+        $latestHistoryDate = GoldPriceHistory::where('type', $mainType)
+            ->orderByDesc('date')
+            ->value('date');
+
+        if ($latestHistoryDate) {
+            $sevenDaysAgo = Carbon::parse($latestHistoryDate)->subDays(7)->toDateString();
+            $thirtyDaysAgo = Carbon::parse($latestHistoryDate)->subDays(30)->toDateString();
+
+            $sevenDayHistory = GoldPriceHistory::where('type', $mainType)
+                ->whereDate('date', $sevenDaysAgo)
+                ->orderByDesc('id')
+                ->first();
+
+            $thirtyDayHistory = GoldPriceHistory::where('type', $mainType)
+                ->whereDate('date', $thirtyDaysAgo)
+                ->orderByDesc('id')
+                ->first();
+
+            $change7d = ($currentBuy && $sevenDayHistory) ? round(($currentBuy - $sevenDayHistory->buy_price) / $sevenDayHistory->buy_price * 100, 2) : null;
+            $change7dDir = ($change7d > 0) ? 'up' : (($change7d < 0) ? 'down' : 'flat');
+
+            $change30d = ($currentBuy && $thirtyDayHistory) ? round(($currentBuy - $thirtyDayHistory->buy_price) / $thirtyDayHistory->buy_price * 100, 2) : null;
+            $change30dDir = ($change30d > 0) ? 'up' : (($change30d < 0) ? 'down' : 'flat');
+        } else {
+            $change7d = $change30d = $change7dDir = $change30dDir = null;
+        }
+        
+        // Sparklines (last 7 and 30 days) using latest available date as reference
+        if ($latestHistoryDate) {
+            $spark7dFrom = Carbon::parse($latestHistoryDate)->subDays(6)->startOfDay();
+            $spark30dFrom = Carbon::parse($latestHistoryDate)->subDays(29)->startOfDay();
+
+            // buy price for 7 days -- average buy price for each day
+            $spark7d = GoldPriceHistory::select(
+                DB::raw('DATE(date) as day'),
+                DB::raw('AVG(buy_price) as avg_buy_price')
+            )
+            ->where('type', $mainType)
+            ->where('date', '>=', $spark7dFrom)
+            ->where('date', '<=', $latestHistoryDate)
+            ->groupBy(DB::raw('DATE(date)'))
+            ->orderBy('day')
+            ->pluck('avg_buy_price')
             ->toArray();
-        $spark30d = GoldPriceHistory::where('type', $mainType)
-            ->where('date', '>=', Carbon::now()->subDays(29)->startOfDay())
-            ->orderBy('date')
-            ->pluck('buy_price')
+
+            // buy price for 30 days -- average buy price for each day
+            $spark30d = GoldPriceHistory::select(
+                DB::raw('DATE(date) as day'),
+                DB::raw('AVG(buy_price) as avg_buy_price')
+            )
+            ->where('type', $mainType)
+            ->where('date', '>=', $spark30dFrom)
+            ->where('date', '<=', $latestHistoryDate)
+            ->groupBy(DB::raw('DATE(date)'))
+            ->orderBy('day')
+            ->pluck('avg_buy_price')
+            ->toArray();   
+
+            // sell price for 7 days -- average sell price for each day
+            $sparkSell7d = GoldPriceHistory::select(
+                DB::raw('DATE(date) as day'),
+                DB::raw('AVG(sell_price) as avg_sell_price')
+            )
+            ->where('type', $mainType)
+            ->where('date', '>=', $spark7dFrom)
+            ->where('date', '<=', $latestHistoryDate)
+            ->groupBy(DB::raw('DATE(date)'))
+            ->orderBy('day')
+            ->pluck('avg_sell_price')
             ->toArray();
-        $sparkSell7d = GoldPriceHistory::where('type', $mainType)
-            ->where('date', '>=', Carbon::now()->subDays(6)->startOfDay())
-            ->orderBy('date')
-            ->pluck('sell_price')
+
+            // sell price for 30 days -- average sell price for each day
+            $sparkSell30d = GoldPriceHistory::select(
+                DB::raw('DATE(date) as day'),
+                DB::raw('AVG(sell_price) as avg_sell_price')
+            )
+            ->where('type', $mainType)
+            ->where('date', '>=', $spark30dFrom)
+            ->where('date', '<=', $latestHistoryDate)
+            ->groupBy(DB::raw('DATE(date)'))
+            ->orderBy('day')
+            ->pluck('avg_sell_price')
             ->toArray();
-        $sparkSell30d = GoldPriceHistory::where('type', $mainType)
-            ->where('date', '>=', Carbon::now()->subDays(29)->startOfDay())
-            ->orderBy('date')
-            ->pluck('sell_price')
-            ->toArray();
+        } else {
+            $spark7d = $spark30d = $sparkSell7d = $sparkSell30d = [];
+        }
 
         return view('admin.dashboard', compact(
             'latestPrices', 'chartData', 'range', 'compare',
