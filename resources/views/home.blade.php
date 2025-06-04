@@ -105,7 +105,7 @@
       <nav id="header-nav" class="navbar navbar-expand-lg px-3 mb-3">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/HoaTung-logo-small.png') }}" class="logo">
+            <img src="{{ asset('images/HoaTung-logo-small.png') }}" class="logo rounded-full w-16 h-16 object-cover border border-gray-200 shadow">
           </a>
           <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="navbar-icon" width="50" height="50">
