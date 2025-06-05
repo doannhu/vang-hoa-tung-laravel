@@ -9,16 +9,19 @@
             </a>
         </div>
         <div class="flex items-center space-x-4">
-            <h2 class="text-2xl font-semibold">{{ isset($catalogue) ? 'Sửa catalog' : 'Thêm catalog mới' }}</h2>
-        </div>
+            <h2 class="text-2xl font-bold text-gray-900">{{ isset($catalogue) ? 'Sửa catalog' : 'Thêm catalog mới' }}</h2>            
+        </div>        
         <div class="flex items-center space-x-4">
+            <h4 class="text-md font-bold text-gray-900">Tối đa 10 sản phẩm. Hãy xóa bớt bài cũ để thêm mới.</h4>
+        </div>
+        <!-- <div class="flex items-center space-x-4">
             <a href="{{ route('admin.gold_prices') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Quản lý giá vàng
             </a>
             <a href="{{ route('admin.featured_products.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Quản lý sản phẩm nổi bật
             </a>
-        </div>
+        </div> -->
     </div>
 
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

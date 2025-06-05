@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Thêm bài viết mới</h2>
-        <div class="space-x-2">
+        <!-- <div class="space-x-2">
             <a href="{{ route('admin.gold_prices') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                 <i class="fas fa-coins mr-2"></i> Quản lý giá vàng
             </a>
@@ -20,8 +20,15 @@
             <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
                 <i class="fas fa-home mr-2"></i> Về trang chủ
             </a>
-        </div>
+        </div> -->
+        <h4 class="text-md font-bold text-gray-900">Tối đa 5 bài viết. Hãy xóa bớt bài viết cũ để thêm mới.</h4>
     </div>
+
+    @if(session('error'))
+        <div class="mb-4 text-red-600 font-bold">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="bg-white shadow-md rounded-lg p-6">
         <form action="{{ route('admin.blog_posts.store') }}" method="POST" enctype="multipart/form-data">

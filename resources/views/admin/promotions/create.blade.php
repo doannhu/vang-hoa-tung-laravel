@@ -9,10 +9,11 @@
             </a>
         </div>
         <div class="flex items-center space-x-4">
-            <h2 class="text-2xl font-semibold">Thêm khuyến mãi mới</h2>
+            <h2 class="text-2xl font-bold text-gray-900">Thêm khuyến mãi mới</h2>
+            <h4 class="text-md font-bold text-gray-900">Tối đa 5 quảng cáo khuyến mại. Hãy xóa bớt bài cũ để thêm mới.</h4>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{ route('admin.gold_prices') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <!-- <a href="{{ route('admin.gold_prices') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Quản lý giá vàng
             </a>
             <a href="{{ route('admin.catalogues.index') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
@@ -20,7 +21,7 @@
             </a>
             <a href="{{ route('admin.featured_products.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Quản lý sản phẩm nổi bật
-            </a>
+            </a> -->
         </div>
     </div>
 

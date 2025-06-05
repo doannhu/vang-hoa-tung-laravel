@@ -21,6 +21,10 @@ class BlogPostController extends Controller
 
     public function store(Request $request)
     {
+        if (\App\Models\BlogPost::count() >= 5) {
+            return redirect()->back()->with('error', 'Bạn chỉ có thể có tối đa 5 bài viết. Hãy xóa bớt bài viết cũ để thêm mới.');
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',

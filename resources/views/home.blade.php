@@ -578,7 +578,7 @@
             </div>
 
             {{-- Two Smaller Posts --}}
-            @foreach($blogPosts->skip(1)->take(2) as $post)
+            @foreach($blogPosts->skip(1) as $post)
             <div class="col-md-6 col-sm-12 mb-4">
               <div class="card-item">
                 <div class="card border-0 bg-transparent">

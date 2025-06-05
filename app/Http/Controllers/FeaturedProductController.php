@@ -21,6 +21,10 @@ class FeaturedProductController extends Controller
 
     public function store(Request $request)
     {
+        if (\App\Models\FeaturedProduct::count() >= 10) {
+            return redirect()->back()->with('error', 'Bạn chỉ có thể có tối đa 10 sản phẩm nổi bật. Hãy xóa bớt để thêm mới.');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

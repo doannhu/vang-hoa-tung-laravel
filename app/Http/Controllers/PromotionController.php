@@ -21,6 +21,10 @@ class PromotionController extends Controller
 
     public function store(Request $request)
     {
+        if (\App\Models\Promotion::count() >= 5) {
+            return redirect()->back()->with('error', 'Bạn chỉ có thể có tối đa 5 khuyến mãi. Hãy xóa bớt để thêm mới.');
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
