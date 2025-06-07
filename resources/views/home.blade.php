@@ -105,14 +105,17 @@
       <nav id="header-nav" class="navbar navbar-expand-lg px-3 mb-3">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/HoaTung-logo-small.png') }}" class="logo rounded-full w-16 h-16 object-cover border border-gray-200 shadow">
+            <!-- <img src="{{ asset('images/HoaTung-logo-small.png') }}" class="logo rounded-full w-16 h-16 object-cover border border-gray-200 animated-border"> -->
+            <span class="logo-animated-border" style="width: 50px; height: 50px; display: inline-block;">
+              <img src="{{ asset('images/HoaTung-logo-small.png') }}" style="width: 50px; height: 50px; display: block; border-radius: 10px;">
+            </span>
           </a>
-          <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="navbar-icon" width="50" height="50">
               <use xlink:href="#navbar-icon"></use>
             </svg>
-          </button>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
+          </button> -->
+          <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header px-4 pb-0">
               <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('images/main-logo.png') }}" class="logo">
@@ -206,7 +209,7 @@
                   </ul>
               </ul>
             </div>
-          </div>
+          </div> -->
         </div>
       </nav>    
     </header>
@@ -262,7 +265,7 @@
       <div class="swiper-pagination position-absolute"></div>
     </section>
 
-    <section id="company-services" class="padding-large">
+    <!-- <section id="company-services" class="padding-large">
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-3 col-md-6 pb-3">
@@ -312,6 +315,29 @@
                 <h3 class="card-title text-uppercase text-dark">Thu mua rõ ràng</h3>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <section id="company-services" class="padding-large">
+      <div class="container-fluid">
+        <div class="card-glass-container">
+          <div class="card-glass">
+            <svg class="card-glass__img shipping-fast"><use xlink:href="#shipping-fast" /></svg>
+            <div class="card-glass__title">Ship trong ngày</div>
+          </div>
+          <div class="card-glass">
+            <svg class="card-glass__img shopping-cart"><use xlink:href="#shopping-cart" /></svg>
+            <div class="card-glass__title">Mẫu Theo yêu cầu</div>
+          </div>
+          <div class="card-glass">
+            <svg class="card-glass__img gift"><use xlink:href="#gift" /></svg>
+            <div class="card-glass__title">Ưu đãi ngày lễ</div>
+          </div>
+          <div class="card-glass">
+            <svg class="card-glass__img return"><use xlink:href="#return" /></svg>
+            <div class="card-glass__title">Thu mua rõ ràng</div>
           </div>
         </div>
       </div>
@@ -426,47 +452,47 @@
       <div class="container">
         <div class="row">
           <div class="review-content position-relative">
-            <div class="swiper-icon swiper-arrow swiper-arrow-prev position-absolute d-flex align-items-center justify-content-center">
-              <svg class="icon-arrow" width="25" height="25">
-                <use xlink:href="#arrow-left" />
-              </svg>
-            </div>
             <div class="swiper testimonial-swiper">
-              <!-- <div class="quotation text-center">
-                <svg class="quote">
-                  <use xlink:href="#quote" />
-                </svg>
-              </div> -->
               <div class="swiper-wrapper">
-                <div class="swiper-slide text-center d-flex justify-content-center">
-                  <div class="review-item col-md-10">
-                    <i class="icon icon-review"></i>
-                    <blockquote class="fs-5">“Hai đứa mình mua nhẫn cưới sát giờ, tay chồng thì to, tay vợ thì nhỏ, đi nhiều tiệm mà không lựa đc. Bên Hoa Tùng có nhận sửa size nhẫn nhanh, may kịp trước hôm cưới. Nhẫn được khen rất nhiều.”</blockquote>
-                    <div class="author-detail">
-                      <div class="name text-primary text-uppercase pt-2">Vợ chồng anh Huy, chị Thanh - Lý Sơn</div>
+                <div class="swiper-slide testimonial-card yellow">
+                  <p>"Hai đứa mình mua nhẫn cưới sát giờ, tay chồng thì to, tay vợ thì nhỏ, đi nhiều tiệm mà không lựa đc. Bên Hoa Tùng có nhận sửa size nhẫn nhanh, may kịp trước hôm cưới. Nhẫn được khen rất nhiều."</p>
+                  <div class="stars">★★★★★</div>
+                  <div class="user-info">
+                    <div class="avatar"></div>
+                    <div>
+                      <strong>Vợ chồng anh Huy, chị Thanh</strong><br/>
+                      Lý Sơn
                     </div>
                   </div>
                 </div>
-                <div class="swiper-slide text-center d-flex justify-content-center">
-                  <div class="review-item col-md-10">
-                    <i class="icon icon-review"></i>
-                    <blockquote class="fs-5">“Dịch vụ cầm đồ nhanh, đơn giản, và có hoá đơn. Nhắn tin qua Facebook để kiểm tra hạn, chuyển khoản khi bận không tới được shop.”</blockquote>
-                    <div class="author-detail">
-                      <div class="name text-primary text-uppercase pt-2">Anh Đạt - Nghĩa Dõng</div>
+                <div class="swiper-slide testimonial-card pink">
+                  <p>"Dịch vụ cầm đồ nhanh, đơn giản, và có hoá đơn. Nhắn tin qua Facebook để kiểm tra hạn, chuyển khoản khi bận không tới được shop."</p>
+                  <div class="stars">★★★★★</div>
+                  <div class="user-info">
+                    <div class="avatar"></div>
+                    <div>
+                      <strong>Anh Đạt</strong><br/>
+                      Nghĩa Dõng
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide testimonial-card mint">
+                  <p>"I couldn't believe how fast the requested changes were made. The new website is beautiful and exciting! Just like you first envisioned."</p>
+                  <div class="stars">★★★★★</div>
+                  <div class="user-info">
+                    <div class="avatar"></div>
+                    <div>
+                      <strong>Jordan Rosenfeld</strong><br/>
+                      RenaissanceCreations
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="swiper-icon swiper-arrow swiper-arrow-next position-absolute d-flex align-items-center justify-content-center">
-              <svg class="icon-arrow" width="25" height="25">
-                <use xlink:href="#arrow-right" />
-              </svg>
-            </div>
           </div>
         </div>
-      </div>      
-      <div class="swiper-pagination position-relative text-center"></div>
+      </div>
+      <div class="swiper-pagination text-center mt-5"></div>
     </section>
 
     <section id="collections" class="position-relative padding-large">
@@ -614,7 +640,9 @@
             <div class="col-lg-3 col-sm-6 pb-3 pe-4">
               <div class="footer-menu">
                 <div class="row d-flex flex-wrap">
-                  <img src="{{ asset('images/HoaTung-logo-small.png') }}" alt="vangHoaTungLogo" class="col-sm-3 pb-2">
+                  <span class="logo-animated-border" style="width: 50px; height: 50px; display: inline-block;">
+                    <img src="{{ asset('images/HoaTung-logo-small.png') }}" style="width: 50px; height: 50px; display: block; border-radius: 10px;">
+                  </span>
                   <h5 class="col-sm-9">Vàng Hoa Tùng</h5>
                 </div>
                 <p>Hoa Tùng, một địa chỉ uy tín tại Quảng Ngãi, không chỉ là cửa hàng vàng bạc trang sức lâu đời mà còn là nơi cung cấp dịch vụ thời trang vàng bạc chất lượng, từ truyền thống đến hiện đại. Chúng tôi cam kết mang đến trải nghiệm mua sắm độc đáo và đổi mới để đáp ứng mọi nhu cầu của khách hàng. Ngoài ra, Hoa Tùng còn là đối tác tin cậy với dịch vụ cầm đồ chuyên nghiệp, giúp khách hàng giữ vững tài chính và đảm bảo an ninh cho tài sản của mình.</p>
@@ -646,7 +674,7 @@
                       <a href="#">Tiktok</a>
                     </li>
                     <li class="pb-2">
-                      <a href="#">Yalo</a>
+                      <a href="#">Zalo</a>
                     </li>
                   </ul>
                 </div>

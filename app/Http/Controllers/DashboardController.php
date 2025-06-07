@@ -21,6 +21,9 @@ class DashboardController extends Controller
             $days = 14;
         }
         $mainType = 'Nhẫn Tròn 99.99%';
+        $latestHistoryDate = GoldPriceHistory::where('type', $mainType)
+        ->orderByDesc('date')
+        ->value('date');
 
         // Get latest prices for each type
         $latestPrices = GoldPrice::select('id', 'type', 'buy_price', 'sell_price', 'date')
@@ -67,7 +70,8 @@ class DashboardController extends Controller
         }
 
         // Get price history for chart (main type only) - latest price for each date
-        $fromDate = Carbon::now()->subDays($days - 1)->startOfDay();
+        $fromDate = $latestHistoryDate ? Carbon::parse($latestHistoryDate)->subDays($days)->startOfDay() : Carbon::now()->subDays($days - 1)->startOfDay();
+
         // Step 1: Get the IDs of the latest record for each date
         $latestIds = GoldPriceHistory::select(DB::raw('MAX(id) as id'))
         ->where('type', $mainType)
@@ -93,7 +97,7 @@ class DashboardController extends Controller
         }
 
         // --- Heat-bar data ---
-        $monthFrom = Carbon::now()->subDays(30)->startOfDay();
+        $monthFrom = $latestHistoryDate ? Carbon::parse($latestHistoryDate)->subDays(30)->startOfDay() : Carbon::now()->subDays(30)->startOfDay();
         $monthHistory = GoldPriceHistory::where('type', $mainType)
             ->where('date', '>=', $monthFrom)
             ->orderBy('date')
@@ -103,7 +107,7 @@ class DashboardController extends Controller
         $minSell = $monthHistory->min('sell_price');
         $maxSell = $monthHistory->max('sell_price');
         
-        $today = Carbon::now()->toDateString();
+        $today = $latestHistoryDate;
         $todayHistory = GoldPriceHistory::where('type', $mainType)
             ->whereDate('date', $today)
             ->orderByDesc('id')
@@ -121,10 +125,6 @@ class DashboardController extends Controller
         $spreadPct = ($currentBuy && $currentSell && $currentBuy > 0) ? round(($currentSell - $currentBuy) / $currentBuy * 100, 2) : null;
         
         // 7d and 30d change -- compare latest price with 7 and 30 days before the latest available date
-        $latestHistoryDate = GoldPriceHistory::where('type', $mainType)
-            ->orderByDesc('date')
-            ->value('date');
-
         if ($latestHistoryDate) {
             $sevenDaysAgo = Carbon::parse($latestHistoryDate)->subDays(7)->toDateString();
             $thirtyDaysAgo = Carbon::parse($latestHistoryDate)->subDays(30)->toDateString();
