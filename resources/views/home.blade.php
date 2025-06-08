@@ -510,7 +510,7 @@
                   </div>
                   <div class="image-overlay position-relative">
                     <div class="product-image">
-                      <img src="{{ asset('storage/' . $catalogue->image_path) }}" alt="{{ $catalogue->title }}" class="product-image img-fluid" style="border-radius: 15px; overflow: hidden;">
+                      <img src="{{ asset('storage/' . $catalogue->image_path) }}" alt="{{ $catalogue->title }}" class="product-image img-fluid img-catalogue" style="border-radius: 15px; overflow: hidden;">
                       <div class="text-box box-slide position-absolute">
                         <div class="text-content p-5 bg-light">
                           <h3>{{ $catalogue->subtitle }}</h3>
