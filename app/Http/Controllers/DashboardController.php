@@ -44,12 +44,12 @@ class DashboardController extends Controller
                 ->value('date');
             // Find the previous date before the latest date
             $prevDate = GoldPriceHistory::where('type', $price->type)
-                ->where('date', '<', $latestDate)
+                ->whereRaw('DATE(date) < DATE(?)', [$latestDate])
                 ->orderByDesc('date')
                 ->value('date');
             // Get the price for the previous date
             $prevPrice = GoldPriceHistory::where('type', $price->type)
-                ->where('date', $prevDate)
+                ->whereRaw('DATE(date) = DATE(?)', [$prevDate])
                 ->orderByDesc('id')
                 ->first();
             $prevPrices[$price->type] = $prevPrice;
