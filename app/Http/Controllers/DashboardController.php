@@ -129,13 +129,16 @@ class DashboardController extends Controller
             $sevenDaysAgo = Carbon::parse($latestHistoryDate)->subDays(7)->toDateString();
             $thirtyDaysAgo = Carbon::parse($latestHistoryDate)->subDays(30)->toDateString();
 
+            // Get 7-day history for main type
             $sevenDayHistory = GoldPriceHistory::where('type', $mainType)
-                ->whereDate('date', $sevenDaysAgo)
+                ->whereDate('date', '<=', $sevenDaysAgo)
+                ->orderByDesc('date')
                 ->orderByDesc('id')
                 ->first();
 
             $thirtyDayHistory = GoldPriceHistory::where('type', $mainType)
-                ->whereDate('date', $thirtyDaysAgo)
+                ->whereDate('date', '<=', $thirtyDaysAgo)
+                ->orderByDesc('date')
                 ->orderByDesc('id')
                 ->first();
 
